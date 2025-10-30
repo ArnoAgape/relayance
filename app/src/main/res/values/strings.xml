@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Relayance</string>
+    <string name="detail_screen_title">Details</string>
+    <string name="add_customer">Add customer</string>
+    <string name="email">email</string>
+    <string name="save_changes">Save changes</string>
+    <string name="name">name</string>
+    <string name="no_email">No email</string>
+    <string name="no_name">No name</string>
+    <string name="created_at">Created at: %1$s</string>
+    <string name="new_ribbon">New</string>
+    <string name="contentDescription_go_back">Go back</string>
+</resources>
