@@ -97,7 +97,7 @@ fun DetailScreen(
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text =  stringResource(id = R.string.created_at, customer.createdAt.toHumanDate()),
+                            text = stringResource(id = R.string.created_at, customer.createdAt.toHumanDate()),
                             style = MaterialTheme.typography.bodyMedium.copy(
                                 fontSize = 16.sp
                             )
@@ -129,5 +129,13 @@ fun DetailScreen(
 @Preview
 @Composable
 private fun DetailScreenPreview() {
-    DetailScreen(customer = Customer(0, "Nom du Client", "email@client.com", Date())) {}
+    DetailScreen(
+        customer =
+            Customer(
+                id = 0,
+                name = "Nom du Client",
+                email = "email@client.com",
+                createdAt = Date()
+            )
+    ) {}
 }

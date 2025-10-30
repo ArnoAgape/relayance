@@ -1,4 +1,5 @@
 import com.android.build.gradle.BaseExtension
+import org.gradle.kotlin.dsl.androidTestImplementation
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -82,7 +83,7 @@ val jacocoTestReport by tasks.registering(JacocoReport::class) {
         html.required.set(true)
     }
 
-    val debugTree = fileTree("${layout.buildDirectory}/tmp/kotlin-classes/debug")
+    val debugTree = fileTree(layout.buildDirectory.dir("/tmp/kotlin-classes/debug"))
     val mainSrc = androidExtension.sourceSets.getByName("main").java.srcDirs
 
     classDirectories.setFrom(debugTree)
@@ -108,11 +109,13 @@ dependencies {
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.espresso.contrib)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation (libs.androidx.espresso.intents)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
