@@ -1,11 +1,12 @@
 package com.kirabium.relayance.data.repository
 
 import com.kirabium.relayance.data.service.CustomerApi
-import com.kirabium.relayance.data.service.CustomerFakeApi
 import com.kirabium.relayance.domain.model.Customer
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class DataRepository @Inject constructor(private val customerApi: CustomerApi) {
 
     /**
@@ -16,7 +17,18 @@ class DataRepository @Inject constructor(private val customerApi: CustomerApi) {
      */
     val customers: Flow<List<Customer>> = customerApi.getCustomersOrderByCreationDateDesc()
 
+    /**
+     * Adds a new Customer to the data source using the injected CustomerApi.
+     *
+     * @param customer The Customer object to be added.
+     */
     suspend fun addCustomer(customer: Customer): Unit = customerApi.addCustomer(customer)
 
-    fun getCustomerById(customerId: Int): Flow<Customer?> = customerApi.get
+    /**
+     * Collects a customer by its Id using the injected CustomerApi.
+     *
+     * @param customerId The Id of the customer to be collected.
+     * @return Flow containing the collected Customer.
+     */
+    fun getCustomerById(customerId: Int): Flow<Customer?> = customerApi.getCustomerById(customerId)
 }
