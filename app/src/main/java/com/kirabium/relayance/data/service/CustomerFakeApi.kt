@@ -14,7 +14,7 @@ class CustomerFakeApi : CustomerApi {
         return calendar.time
     }
 
-    private val customers = MutableStateFlow(
+    val customers = MutableStateFlow(
         mutableListOf(
             Customer(1, "Alice Wonderland", "alice@example.com", generateDate(12)),
             Customer(2, "Bob Builder", "bob@example.com", generateDate(6)),

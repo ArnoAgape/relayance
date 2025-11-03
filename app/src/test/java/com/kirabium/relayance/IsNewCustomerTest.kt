@@ -1,6 +1,7 @@
 package com.kirabium.relayance
 
-import com.kirabium.relayance.data.service.CustomerFakeApi
+import com.kirabium.relayance.domain.model.Customer
+import com.kirabium.relayance.ui.activity.FakeCustomers.generateDate
 import org.junit.Test
 import org.junit.Assert.*
 
@@ -10,9 +11,24 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class IsNewCustomerTest {
-    private val oldCustomer = CustomerFakeApi.customers[0]
-    private val threeMonthsCustomer = CustomerFakeApi.customers[2]
-    private val newCustomer = CustomerFakeApi.customers[3]
+    private val oldCustomer =
+        Customer(1,
+            "Alice Wonderland",
+            "alice@example.com",
+            generateDate(12)
+        )
+    private val threeMonthsCustomer =
+        Customer(3,
+            "Charlie Chocolate",
+            "charlie@example.com",
+            generateDate(3)
+        )
+    private val newCustomer =
+        Customer(4,
+            "Diana Dream",
+            "diana@example.com",
+            generateDate(1)
+        )
 
     @Test
     fun `emits true when customer is less than three months old`() {

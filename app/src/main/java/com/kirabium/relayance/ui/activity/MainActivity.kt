@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kirabium.relayance.data.service.CustomerFakeApi
 import com.kirabium.relayance.databinding.ActivityMainBinding
 import com.kirabium.relayance.ui.adapter.CustomerAdapter
 
@@ -30,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupCustomerRecyclerView() {
         binding.customerRecyclerView.layoutManager = LinearLayoutManager(this)
-        customerAdapter = CustomerAdapter(CustomerFakeApi.customers) { customer ->
+        customerAdapter = CustomerAdapter(FakeCustomers.customers) { customer ->
             val intent = Intent(this, DetailActivity::class.java).apply {
                 putExtra(DetailActivity.EXTRA_CUSTOMER_ID, customer.id)
             }

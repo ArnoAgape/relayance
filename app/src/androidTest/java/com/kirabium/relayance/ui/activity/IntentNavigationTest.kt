@@ -11,7 +11,8 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.kirabium.relayance.R
-import com.kirabium.relayance.data.service.CustomerFakeApi
+import com.kirabium.relayance.domain.model.Customer
+import com.kirabium.relayance.ui.activity.FakeCustomers.generateDate
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -25,7 +26,13 @@ class IntentNavigationTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
-    private val customer = CustomerFakeApi.customers
+    private val customer = listOf(
+        Customer(1, "Alice Wonderland", "alice@example.com", generateDate(12)),
+        Customer(2, "Bob Builder", "bob@example.com", generateDate(6)),
+        Customer(3, "Charlie Chocolate", "charlie@example.com", generateDate(3)),
+        Customer(4, "Diana Dream", "diana@example.com", generateDate(1)),
+        Customer(5, "Evan Escape", "evan@example.com", generateDate(0))
+    )
 
     @Before
     fun setup() {

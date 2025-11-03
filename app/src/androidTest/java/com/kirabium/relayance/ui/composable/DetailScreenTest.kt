@@ -9,9 +9,10 @@ import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.kirabium.relayance.R
-import com.kirabium.relayance.data.service.CustomerFakeApi
 import com.kirabium.relayance.extension.DateExt.Companion.toHumanDate
 import com.kirabium.relayance.screen.detailScreen.DetailScreen
+import com.kirabium.relayance.domain.model.Customer
+import com.kirabium.relayance.ui.activity.FakeCustomers.generateDate
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,7 +24,12 @@ class DetailScreenTest {
     @get:Rule
     val composeTestRule = createAndroidComposeRule<ComponentActivity>()
 
-    private val customer = CustomerFakeApi.customers[0]
+    private val customer =
+        Customer(1,
+            "Alice Wonderland",
+            "alice@example.com",
+            generateDate(12)
+        )
 
     @Test
     fun displaysCorrectCustomerDetails_andHandlesBackClick() {
