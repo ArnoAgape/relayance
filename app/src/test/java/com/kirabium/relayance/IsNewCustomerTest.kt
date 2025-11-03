@@ -1,6 +1,6 @@
 package com.kirabium.relayance
 
-import com.kirabium.relayance.data.DummyData
+import com.kirabium.relayance.data.service.CustomerFakeApi
 import org.junit.Test
 import org.junit.Assert.*
 
@@ -10,9 +10,9 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class IsNewCustomerTest {
-    private val oldCustomer = DummyData.customers[0]
-    private val threeMonthsCustomer = DummyData.customers[2]
-    private val newCustomer = DummyData.customers[3]
+    private val oldCustomer = CustomerFakeApi.customers[0]
+    private val threeMonthsCustomer = CustomerFakeApi.customers[2]
+    private val newCustomer = CustomerFakeApi.customers[3]
 
     @Test
     fun `emits true when customer is less than three months old`() {

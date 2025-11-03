@@ -1,6 +1,6 @@
 package com.kirabium.relayance
 
-import com.kirabium.relayance.data.DummyData.generateDate
+import com.kirabium.relayance.data.service.CustomerFakeApi.generateDate
 import com.kirabium.relayance.extension.DateExt.Companion.toHumanDate
 import junit.framework.TestCase.assertEquals
 import org.junit.After

@@ -11,7 +11,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.kirabium.relayance.R
-import com.kirabium.relayance.data.DummyData
+import com.kirabium.relayance.data.service.CustomerFakeApi
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -25,7 +25,7 @@ class IntentNavigationTest {
     @get:Rule
     val activityRule = ActivityScenarioRule(MainActivity::class.java)
 
-    private val customer = DummyData.customers
+    private val customer = CustomerFakeApi.customers
 
     @Before
     fun setup() {

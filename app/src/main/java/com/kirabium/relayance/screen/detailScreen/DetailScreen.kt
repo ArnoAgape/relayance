@@ -1,4 +1,4 @@
-package com.kirabium.relayance.ui.composable
+package com.kirabium.relayance.screen.detailScreen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

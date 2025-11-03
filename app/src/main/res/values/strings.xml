@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Relayance</string>
+    <string name="app_name" translatable="false">Relayance</string>
     <string name="detail_screen_title">Details</string>
     <string name="add_customer">Add customer</string>
     <string name="email">email</string>
