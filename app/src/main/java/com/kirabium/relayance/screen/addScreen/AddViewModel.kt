@@ -1,6 +1,6 @@
 package com.kirabium.relayance.screen.addScreen
 
-import android.util.Log
+import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kirabium.relayance.R
@@ -58,7 +58,7 @@ class AddViewModel @Inject constructor(
                 return
             }
 
-            newEmail.isBlank() -> {
+            newEmail.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(newEmail).matches() -> {
                 _events.trySend(Event.ShowToast(R.string.error_email))
                 return
             }
@@ -79,7 +79,6 @@ class AddViewModel @Inject constructor(
                 _uiState.value = AddUiState.Success(customer)
                 _events.trySend(Event.ShowToast(R.string.add_customer_success))
                 _events.trySend(Event.CustomerAdded)
-                Log.d("AddViewModel", ">>> Event.CustomerAdded envoyé")
                 _uiState.value = AddUiState.Idle
             } catch (e: Exception) {
                 when (e) {
