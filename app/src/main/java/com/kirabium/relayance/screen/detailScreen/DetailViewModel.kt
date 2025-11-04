@@ -4,15 +4,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kirabium.relayance.data.repository.DataRepository
-import com.kirabium.relayance.ui.common.Event
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,10 +21,7 @@ class DetailViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-        private val customerId: Int = checkNotNull(savedStateHandle["customerId"])
-
-    private val _events = Channel<Event>()
-    val eventsFlow = _events.receiveAsFlow()
+    private val customerId: Int = checkNotNull(savedStateHandle["customerId"])
 
     private val _uiState = MutableStateFlow<DetailUiState>(DetailUiState.Loading)
     val uiState: StateFlow<DetailUiState> = _uiState.asStateFlow()

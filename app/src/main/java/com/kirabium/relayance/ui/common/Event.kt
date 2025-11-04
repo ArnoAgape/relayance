@@ -19,4 +19,5 @@ sealed interface Event {
      * @param message The string resource ID of the message to display.
      */
     data class ShowToast(@StringRes val message: Int) : Event
+    data object CustomerAdded : Event
 }

@@ -10,4 +10,12 @@
     <string name="created_at">Created at: %1$s</string>
     <string name="new_ribbon">New</string>
     <string name="contentDescription_go_back">Go back</string>
+
+    <string name="add_customer_success">Customer added successfully</string>
+
+    <string name="error_generic">An issue occurred</string>
+    <string name="error_no_account_customer">No customer found, please try again</string>
+    <string name="error_no_network">No network, please try again</string>
+    <string name="error_name">Invalid name, please try again</string>
+    <string name="error_email">Invalid email, please try again</string>
 </resources>
