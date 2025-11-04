@@ -22,7 +22,7 @@ class DataRepository @Inject constructor(private val customerApi: CustomerApi) {
      *
      * @param customer The Customer object to be added.
      */
-    suspend fun addCustomer(customer: Customer): Unit = customerApi.addCustomer(customer)
+    fun addCustomer(customer: Customer): Unit = customerApi.addCustomer(customer)
 
     /**
      * Collects a customer by its Id using the injected CustomerApi.

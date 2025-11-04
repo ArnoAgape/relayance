@@ -1,5 +1,6 @@
 package com.kirabium.relayance.screen.detailScreen
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -21,7 +22,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -57,6 +57,7 @@ fun DetailScreen(
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
+        Log.d("DetailScreen", ">>> Current state: $uiState")
         viewModel.eventsFlow.collect { event ->
             when (event) {
                 is Event.ShowToast ->
@@ -70,7 +71,8 @@ fun DetailScreen(
     }
 
     Scaffold(
-        modifier = modifier.background(MaterialTheme.colorScheme.background),
+        modifier = modifier
+            .background(MaterialTheme.colorScheme.background),
         topBar = {
             TopAppBar(
                 title = {
@@ -120,7 +122,9 @@ fun DetailScreen(
             is DetailUiState.Success -> {
                 val customer = (uiState as DetailUiState.Success).customer
                 DetailContent(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(contentPadding),
                     customer = customer
                 )
 
@@ -134,66 +138,58 @@ private fun DetailContent(
     modifier: Modifier = Modifier,
     customer: Customer
 ) {
-    Surface(
-        modifier = modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Column(
+    Column {
+        Card(
             modifier = modifier
-                .padding(16.dp)
+                .fillMaxWidth()
+                .padding(16.dp),
+            shape = RoundedCornerShape(16.dp),
+            elevation = CardDefaults.cardElevation(8.dp)
         ) {
-            Card(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                shape = RoundedCornerShape(16.dp),
-                elevation = CardDefaults.cardElevation(8.dp)
-            ) {
-                Box(modifier = Modifier.padding(24.dp)) {
-                    Column(
-                        horizontalAlignment = Alignment.Start,
-                        modifier = Modifier.fillMaxWidth()
+            Box(modifier = Modifier.padding(24.dp)) {
+                Column(
+                    horizontalAlignment = Alignment.Start,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = customer.name,
+                        style = MaterialTheme.typography.headlineMedium.copy(
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = customer.email,
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            fontSize = 16.sp
+                        )
+                    )
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = stringResource(id = R.string.created_at, customer.createdAt.toHumanDate()),
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            fontSize = 16.sp
+                        )
+                    )
+                }
+                if (customer.isNewCustomer())
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .offset(x = 24.dp, y = (-24).dp)
+                            .rotate(45f)
+                            .background(Color.Red)
+                            .padding(8.dp)
                     ) {
                         Text(
-                            text = customer.name,
-                            style = MaterialTheme.typography.headlineMedium.copy(
-                                fontSize = 24.sp,
+                            text = stringResource(id = R.string.new_ribbon),
+                            color = Color.White,
+                            style = MaterialTheme.typography.bodyMedium.copy(
                                 fontWeight = FontWeight.Bold
                             )
                         )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Text(
-                            text = customer.email,
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                fontSize = 16.sp
-                            )
-                        )
-                        Spacer(modifier = Modifier.height(16.dp))
-                        Text(
-                            text = stringResource(id = R.string.created_at, customer.createdAt.toHumanDate()),
-                            style = MaterialTheme.typography.bodyMedium.copy(
-                                fontSize = 16.sp
-                            )
-                        )
                     }
-                    if (customer.isNewCustomer())
-                        Box(
-                            modifier = Modifier
-                                .align(Alignment.TopEnd)
-                                .offset(x = 24.dp, y = (-24).dp)
-                                .rotate(45f)
-                                .background(Color.Red)
-                                .padding(8.dp)
-                        ) {
-                            Text(
-                                text = stringResource(id = R.string.new_ribbon),
-                                color = Color.White,
-                                style = MaterialTheme.typography.bodyMedium.copy(
-                                    fontWeight = FontWeight.Bold
-                                )
-                            )
-                        }
-                }
             }
         }
     }

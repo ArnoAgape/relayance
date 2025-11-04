@@ -1,6 +1,6 @@
 package com.kirabium.relayance.screen.detailScreen
 
-import androidx.lifecycle.SavedStateHandle
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kirabium.relayance.R
@@ -20,12 +20,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val dataRepository: DataRepository,
-    savedStateHandle: SavedStateHandle,
+    private val dataRepository: DataRepository
 ) :
     ViewModel() {
-
-    private val customerId: Int = checkNotNull(savedStateHandle["customerId"])
 
     private val _uiState = MutableStateFlow<DetailUiState>(DetailUiState.Loading)
     val uiState: StateFlow<DetailUiState> = _uiState.asStateFlow()
@@ -33,11 +30,7 @@ class DetailViewModel @Inject constructor(
     private val _events = Channel<Event>(Channel.BUFFERED)
     val eventsFlow = _events.receiveAsFlow()
 
-    init {
-        observeCustomer()
-    }
-
-    private fun observeCustomer() {
+    fun observeCustomer(customerId: Int) {
         viewModelScope.launch {
             dataRepository.getCustomerById(customerId)
                 .onStart {
@@ -52,6 +45,7 @@ class DetailViewModel @Inject constructor(
                     _events.trySend(Event.ShowToast(R.string.error_generic))
                 }
                 .collect { customer ->
+                    Log.d("DetailViewModel", ">>> Received customer=$customer for id=$customerId")
                     val newState = if (customer != null) {
                         DetailUiState.Success(customer)
                     } else {
