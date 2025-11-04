@@ -3,7 +3,10 @@ package com.kirabium.relayance.ui.activity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.kirabium.relayance.screen.detailScreen.DetailScreen
+import com.kirabium.relayance.screen.detailScreen.DetailViewModel
+import com.kirabium.relayance.ui.theme.RelayanceTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,8 +25,11 @@ class DetailActivity : AppCompatActivity() {
         val customerId = intent.getIntExtra(EXTRA_CUSTOMER_ID, -1)
         FakeCustomers.customers.find { it.id == customerId }?.let {
             setContent {
-                DetailScreen(customer = it) {
-                    onBackPressedDispatcher.onBackPressed()
+                RelayanceTheme {
+                    DetailScreen(
+                        viewModel = hiltViewModel<DetailViewModel>(),
+                        onBackClick = { onBackPressedDispatcher.onBackPressed() }
+                    )
                 }
             }
         }
