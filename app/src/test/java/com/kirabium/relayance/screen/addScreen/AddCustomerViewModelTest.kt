@@ -5,18 +5,14 @@ import com.kirabium.relayance.R
 import com.kirabium.relayance.data.repository.DataRepository
 import com.kirabium.relayance.data.service.CustomerFakeApi
 import com.kirabium.relayance.domain.model.Customer
-import com.kirabium.relayance.ui.activity.FakeCustomers.customers
 import com.kirabium.relayance.ui.common.Event
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
-import java.util.Date
 
 class AddCustomerViewModelTest {
 
@@ -56,11 +52,10 @@ class AddCustomerViewModelTest {
         viewModel.eventsFlow.test {
             val event = awaitItem()
             val event2 = awaitItem()
-            println("Event reçu : $event")
+
             assertTrue(event is Event.ShowToast)
             assertTrue(event2 is Event.CustomerAdded)
-            assertEquals(R.string.add_customer_success,
-                (event as Event.ShowToast).message)
+            assertEquals(R.string.add_customer_success,(event as Event.ShowToast).message)
         }
     }
 
