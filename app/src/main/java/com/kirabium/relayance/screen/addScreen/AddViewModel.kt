@@ -1,6 +1,5 @@
 package com.kirabium.relayance.screen.addScreen
 
-import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kirabium.relayance.R
@@ -48,7 +47,7 @@ class AddViewModel @Inject constructor(
     /**
      * Attempts to add the current post to the repository after setting the author.
      */
-    fun addCustomer(name: String, email: String) {
+    suspend fun addCustomer(name: String, email: String) {
         val newName = name.trim()
         val newEmail = email.trim()
 
@@ -58,7 +57,7 @@ class AddViewModel @Inject constructor(
                 return
             }
 
-            newEmail.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(newEmail).matches() -> {
+            newEmail.isBlank() || !isEmailValid(newEmail) -> {
                 _events.trySend(Event.ShowToast(R.string.error_email))
                 return
             }
@@ -71,33 +70,36 @@ class AddViewModel @Inject constructor(
             createdAt = Date()
         )
 
-        viewModelScope.launch {
-            _uiState.value = AddUiState.Loading
-            try {
-                dataRepository.addCustomer(customer)
+        _uiState.value = AddUiState.Loading
+        try {
+            dataRepository.addCustomer(customer)
 
-                _uiState.value = AddUiState.Success(customer)
-                _events.trySend(Event.ShowToast(R.string.add_customer_success))
-                _events.trySend(Event.CustomerAdded)
-                _uiState.value = AddUiState.Idle
-            } catch (e: Exception) {
-                when (e) {
-                    is IllegalStateException -> {
-                        _uiState.value = AddUiState.Error.NoAccount()
-                        _events.trySend(Event.ShowToast(R.string.error_no_account_customer))
-                    }
+            _uiState.value = AddUiState.Success(customer)
+            _events.trySend(Event.ShowToast(R.string.add_customer_success))
+            _events.trySend(Event.CustomerAdded)
+            _uiState.value = AddUiState.Idle
+        } catch (e: Exception) {
+            when (e) {
+                is IllegalStateException -> {
+                    _uiState.value = AddUiState.Error.NoAccount()
+                    _events.trySend(Event.ShowToast(R.string.error_no_account_customer))
+                }
 
-                    is IOException -> {
-                        _uiState.value = AddUiState.Error.Generic("Network error: ${e.message}")
-                        _events.trySend(Event.ShowToast(R.string.error_no_network))
-                    }
+                is IOException -> {
+                    _uiState.value = AddUiState.Error.Generic("Network error: ${e.message}")
+                    _events.trySend(Event.ShowToast(R.string.error_no_network))
+                }
 
-                    else -> {
-                        _uiState.value = AddUiState.Error.Generic("Unexpected error: ${e.message}")
-                        _events.trySend(Event.ShowToast(R.string.error_generic))
-                    }
+                else -> {
+                    _uiState.value = AddUiState.Error.Generic("Unexpected error: ${e.message}")
+                    _events.trySend(Event.ShowToast(R.string.error_generic))
                 }
             }
         }
+    }
+
+    fun isEmailValid(email: String): Boolean {
+        val emailRegex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
+        return emailRegex.matches(email)
     }
 }

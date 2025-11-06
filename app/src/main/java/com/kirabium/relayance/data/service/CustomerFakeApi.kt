@@ -1,6 +1,8 @@
 package com.kirabium.relayance.data.service
 
 import com.kirabium.relayance.domain.model.Customer
+import com.kirabium.relayance.ui.activity.FakeCustomers.customers
+import com.kirabium.relayance.ui.activity.FakeCustomers.generateDate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
@@ -8,13 +10,8 @@ import java.util.Calendar
 import java.util.Date
 
 class CustomerFakeApi : CustomerApi {
-    fun generateDate(monthsBack: Int): Date {
-        val calendar = Calendar.getInstance()
-        calendar.add(Calendar.MONTH, -monthsBack)
-        return calendar.time
-    }
 
-    val customers = MutableStateFlow(
+    private val customers = MutableStateFlow(
         mutableListOf(
             Customer(1, "Alice Wonderland", "alice@example.com", generateDate(12)),
             Customer(2, "Bob Builder", "bob@example.com", generateDate(6)),
@@ -26,7 +23,7 @@ class CustomerFakeApi : CustomerApi {
 
     override fun getCustomersOrderByCreationDateDesc(): Flow<List<Customer>> = customers
 
-    override fun addCustomer(customer: Customer) {
+    override suspend fun addCustomer(customer: Customer) {
         customers.value.add(0, customer)
     }
 

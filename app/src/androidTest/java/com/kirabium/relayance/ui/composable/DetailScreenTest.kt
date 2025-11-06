@@ -10,8 +10,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.kirabium.relayance.R
 import com.kirabium.relayance.extension.DateExt.Companion.toHumanDate
-import com.kirabium.relayance.screen.detailScreen.DetailScreen
 import com.kirabium.relayance.domain.model.Customer
+import com.kirabium.relayance.screen.detailScreen.DetailContent
 import com.kirabium.relayance.ui.activity.FakeCustomers.generateDate
 import org.junit.Rule
 import org.junit.Test
@@ -41,7 +41,7 @@ class DetailScreenTest {
             R.string.contentDescription_go_back
         )
 
-        composeTestRule.setContent { DetailScreen(customer = customer) { } }
+        composeTestRule.setContent { DetailContent(customer = customer) }
 
         composeTestRule.onNodeWithText(customer.name).assertIsDisplayed()
         composeTestRule.onNodeWithText(customer.email).assertIsDisplayed()

@@ -62,9 +62,16 @@ class AddCustomerActivity : AppCompatActivity() {
                 viewModel.eventsFlow.collect { event ->
                     when (event) {
                         is Event.ShowToast -> {
-                            Toast.makeText(this@AddCustomerActivity, event.message, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@AddCustomerActivity,
+                                event.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                        is Event.CustomerAdded -> { finish() }
+
+                        is Event.CustomerAdded -> {
+                            finish()
+                        }
                     }
                 }
             }
@@ -76,7 +83,9 @@ class AddCustomerActivity : AppCompatActivity() {
             val newName = binding.nameEditText.text.toString().trim()
             val newEmail = binding.emailEditText.text.toString().trim()
 
-            viewModel.addCustomer(newName, newEmail)
+            lifecycleScope.launch {
+                viewModel.addCustomer(newName, newEmail)
+            }
         }
     }
 

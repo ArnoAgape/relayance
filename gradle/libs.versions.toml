@@ -1,5 +1,6 @@
 [versions]
 agp = "8.13.0"
+cucumberJava = "7.18.1"
 espressoIntents = "3.7.0"
 javapoet = "1.13.0"
 kotlin = "2.2.21"
@@ -10,7 +11,7 @@ espressoCore = "3.7.0"
 lifecycleRuntimeKtx = "2.9.4"
 activityCompose = "1.11.0"
 hilt = "2.57.2"
-composeBom = "2025.10.01"
+composeBom = "2025.11.00"
 appcompat = "1.7.1"
 material = "1.13.0"
 activity = "1.11.0"
@@ -19,8 +20,18 @@ espressoContrib = "3.7.0"
 lifecycleRuntimeCompose = "2.9.4"
 ksp = "2.2.20-2.0.3"
 hiltNavigationCompose = "1.3.0"
+mockk = "1.14.6"
+kotlinxCoroutinesAndroid = "1.10.2"
+turbine = "1.2.1"
 
 [libraries]
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesAndroid" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+cucumber-android = { module = "io.cucumber:cucumber-android", version.ref = "cucumberJava" }
+cucumber-java = { module = "io.cucumber:cucumber-java", version.ref = "cucumberJava" }
+cucumber-junit = { module = "io.cucumber:cucumber-junit", version.ref = "cucumberJava" }
 javapoet = { module = "com.squareup:javapoet", version.ref = "javapoet" }
 lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
 compose-ui = { group = "androidx.compose.ui", name = "ui" }

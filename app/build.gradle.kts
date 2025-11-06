@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.hilt)
     id("jacoco")
 }
+
 tasks.withType<Test> {
     extensions.configure(JacocoTaskExtension::class) {
         isIncludeNoLocationClasses = true
@@ -30,7 +31,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "io.cucumber.android.runner.CucumberAndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -100,6 +101,11 @@ val jacocoTestReport by tasks.registering(JacocoReport::class) {
 
 dependencies {
 
+    // Cucumber
+    testImplementation(libs.cucumber.java)
+    testImplementation(libs.cucumber.junit)
+    androidTestImplementation (libs.cucumber.android)
+
     //DI
     implementation(libs.hilt)
     implementation(libs.hilt.navigation.compose)
@@ -130,6 +136,11 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.espresso.contrib)
+    implementation(libs.kotlinx.coroutines.android)
+
+    testImplementation(libs.mockk)
+    testImplementation(libs.turbine)
+    testImplementation (libs.kotlinx.coroutines.test)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

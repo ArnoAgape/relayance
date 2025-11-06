@@ -134,7 +134,7 @@ fun DetailScreen(
 }
 
 @Composable
-private fun DetailContent(
+fun DetailContent(
     modifier: Modifier = Modifier,
     customer: Customer
 ) {

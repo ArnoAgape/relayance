@@ -21,7 +21,7 @@ interface CustomerApi {
      *
      * @param customer The Customer object to be added.
      */
-    fun addCustomer(customer: Customer)
+    suspend fun addCustomer(customer: Customer)
 
     /**
      * Retrieves a [Flow] emitting a [Customer] matching the given [customerId].
