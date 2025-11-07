@@ -5,6 +5,7 @@ import com.kirabium.relayance.R
 import com.kirabium.relayance.data.repository.DataRepository
 import com.kirabium.relayance.data.service.CustomerFakeApi
 import com.kirabium.relayance.domain.model.Customer
+import com.kirabium.relayance.ui.activity.FakeCustomers.customers
 import com.kirabium.relayance.ui.common.Event
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
@@ -70,12 +71,13 @@ class AddCustomerViewModelTest {
         viewModel.addCustomer("Alice", "alice@mail.com")
 
         // Then
-        val customers = (fakeApi.getCustomersOrderByCreationDateDesc()
-                as MutableStateFlow<List<Customer>>).value
+        fakeApi.getCustomersOrderByCreationDateDesc().test {
+            val customers = awaitItem()
 
-        assertEquals(6, customers.size)
-        assertEquals("Alice", customers.first().name)
-        assertEquals("alice@mail.com", customers.first().email)
+            assertEquals(6, customers.size)
+            assertEquals("Alice", customers.first().name)
+            assertEquals("alice@mail.com", customers.first().email)
+        }
     }
 
 }

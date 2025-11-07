@@ -1,6 +1,5 @@
 package com.kirabium.relayance.screen.detailScreen
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,7 +25,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -44,6 +42,7 @@ import com.kirabium.relayance.R
 import com.kirabium.relayance.domain.model.Customer
 import com.kirabium.relayance.extension.DateExt.Companion.toHumanDate
 import com.kirabium.relayance.ui.common.Event
+import com.kirabium.relayance.ui.common.EventsEffect
 import com.kirabium.relayance.ui.theme.RelayanceTheme
 import java.util.Date
 
@@ -59,19 +58,15 @@ fun DetailScreen(
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(Unit) {
-        Log.d("DetailScreen", ">>> Current state: $uiState")
-        viewModel.eventsFlow.collect { event ->
-            when (event) {
-                is Event.ShowMessage -> {
-                    snackbarHostState.showSnackbar(
-                        message = context.getString(event.message),
-                        duration = SnackbarDuration.Short
-                    )
-                }
-
-                else -> Unit
+    EventsEffect(viewModel.eventsFlow) { event ->
+        when (event) {
+            is Event.ShowMessage -> {
+                snackbarHostState.showSnackbar(
+                    message = context.getString(event.message),
+                    duration = SnackbarDuration.Short
+                )
             }
+            else -> Unit
         }
     }
 
