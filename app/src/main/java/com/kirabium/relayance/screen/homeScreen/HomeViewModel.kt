@@ -38,12 +38,12 @@ class HomeViewModel @Inject constructor(
                 .onStart { _uiState.value = HomeUiState.Loading }
                 .catch { e ->
                     _uiState.value = HomeUiState.Error.Generic(e.message ?: "Unknown error")
-                    _events.trySend(Event.ShowToast(R.string.error_generic))
+                    _events.trySend(Event.ShowMessage(R.string.error_generic))
                 }
                 .collect { customers ->
                     if (customers.isEmpty()) {
                         _uiState.value = HomeUiState.Error.Empty("No customers found")
-                        _events.trySend(Event.ShowToast(R.string.error_no_account_customer))
+                        _events.trySend(Event.ShowMessage(R.string.error_no_account_customer))
                     } else {
                         _uiState.value = HomeUiState.Success(customers)
                     }

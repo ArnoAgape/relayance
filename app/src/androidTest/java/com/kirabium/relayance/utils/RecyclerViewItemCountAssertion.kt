@@ -1,4 +1,4 @@
-package com.kirabium.relayance.util
+package com.kirabium.relayance.utils
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

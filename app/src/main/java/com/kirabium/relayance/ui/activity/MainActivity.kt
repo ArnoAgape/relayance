@@ -3,13 +3,15 @@ package com.kirabium.relayance.ui.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import com.kirabium.relayance.R
 import com.kirabium.relayance.databinding.ActivityMainBinding
 import com.kirabium.relayance.screen.homeScreen.HomeUiState
 import com.kirabium.relayance.screen.homeScreen.HomeViewModel
@@ -72,20 +74,17 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             viewModel.eventsFlow.collect { event ->
                 when (event) {
-                    is Event.ShowToast -> {
-                        Toast.makeText(this@MainActivity, event.message, Toast.LENGTH_SHORT).show()
-                    }
+                    is Event.ShowMessage -> showSnackbar(event.message)
                     else -> null
                 }
             }
         }
     }
 
-
     private fun setupFab() {
         binding.addCustomerFab.setOnClickListener {
             val intent = Intent(this, AddCustomerActivity::class.java)
-            startActivity(intent)
+            addCustomerLauncher.launch(intent)
         }
     }
 
@@ -104,5 +103,23 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+    }
+
+    private val addCustomerLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val status = result.data?.getStringExtra("ADD_RESULT")
+            if (status == "success") {
+                showSnackbar(R.string.add_customer_success)
+            }
+        }
+    }
+
+    private fun showSnackbar(messageRes: Int) {
+        Snackbar.make(binding.root,
+            getString(messageRes),
+            Snackbar.LENGTH_SHORT)
+            .show()
     }
 }

@@ -1,7 +1,6 @@
 package com.kirabium.relayance.screen.addScreen
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.kirabium.relayance.R
 import com.kirabium.relayance.data.repository.DataRepository
 import com.kirabium.relayance.domain.model.Customer
@@ -12,7 +11,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.launch
 import java.io.IOException
 import java.util.Date
 import javax.inject.Inject
@@ -44,6 +42,14 @@ class AddViewModel @Inject constructor(
      */
     val customer: StateFlow<Customer> = _customer.asStateFlow()
 
+    var lastToastMessageResId: Int? = null
+        private set
+
+    private fun sendToast(resId: Int) {
+        lastToastMessageResId = resId
+        _events.trySend(Event.ShowMessage(resId))
+    }
+
     /**
      * Attempts to add the current post to the repository after setting the author.
      */
@@ -53,12 +59,12 @@ class AddViewModel @Inject constructor(
 
         when {
             newName.isBlank() -> {
-                _events.trySend(Event.ShowToast(R.string.error_name))
+                sendToast(R.string.error_name)
                 return
             }
 
             newEmail.isBlank() || !isEmailValid(newEmail) -> {
-                _events.trySend(Event.ShowToast(R.string.error_email))
+                sendToast(R.string.error_email)
                 return
             }
         }
@@ -75,31 +81,31 @@ class AddViewModel @Inject constructor(
             dataRepository.addCustomer(customer)
 
             _uiState.value = AddUiState.Success(customer)
-            _events.trySend(Event.ShowToast(R.string.add_customer_success))
+            _events.trySend(Event.ShowSuccessMessage(R.string.add_customer_success))
             _events.trySend(Event.CustomerAdded)
             _uiState.value = AddUiState.Idle
         } catch (e: Exception) {
             when (e) {
                 is IllegalStateException -> {
                     _uiState.value = AddUiState.Error.NoAccount()
-                    _events.trySend(Event.ShowToast(R.string.error_no_account_customer))
+                    sendToast(R.string.error_no_account_customer)
                 }
 
                 is IOException -> {
                     _uiState.value = AddUiState.Error.Generic("Network error: ${e.message}")
-                    _events.trySend(Event.ShowToast(R.string.error_no_network))
+                    sendToast(R.string.error_no_network)
                 }
 
                 else -> {
                     _uiState.value = AddUiState.Error.Generic("Unexpected error: ${e.message}")
-                    _events.trySend(Event.ShowToast(R.string.error_generic))
+                    sendToast(R.string.error_generic)
                 }
             }
         }
     }
 
     fun isEmailValid(email: String): Boolean {
-        val emailRegex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
+        val emailRegex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")
         return emailRegex.matches(email)
     }
 }

@@ -1,7 +1,5 @@
 package com.kirabium.relayance.ui.common
 
-import androidx.annotation.StringRes
-
 /**
  * Represents one-time UI events used to communicate from ViewModels to the UI layer.
  *
@@ -9,7 +7,7 @@ import androidx.annotation.StringRes
  * (e.g., navigation, toast messages, snack bars).
  *
  * Currently, it supports:
- * - [ShowToast]: Displays a short message using a string resource.
+ * - [ShowMessage]: Displays a short message using a string resource.
  */
 sealed interface Event {
 
@@ -18,6 +16,7 @@ sealed interface Event {
      *
      * @param message The string resource ID of the message to display.
      */
-    data class ShowToast(@StringRes val message: Int) : Event
+    data class ShowMessage(val message: Int) : Event
+    data class ShowSuccessMessage(val message: Int) : Event
     data object CustomerAdded : Event
 }

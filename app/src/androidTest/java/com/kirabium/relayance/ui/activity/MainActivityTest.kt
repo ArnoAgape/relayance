@@ -6,7 +6,7 @@ import androidx.test.filters.LargeTest
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.kirabium.relayance.R
-import com.kirabium.relayance.util.RecyclerViewItemCountAssertion
+import com.kirabium.relayance.utils.RecyclerViewItemCountAssertion
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

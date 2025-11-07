@@ -33,8 +33,8 @@ class AddCustomerViewModelTest {
         // Then
         viewModel.eventsFlow.test {
             val event = awaitItem()
-            assertTrue(event is Event.ShowToast)
-            assertEquals(R.string.error_email, (event as Event.ShowToast).message)
+            assertTrue(event is Event.ShowMessage)
+            assertEquals(R.string.error_email, (event as Event.ShowMessage).message)
         }
     }
 
@@ -53,9 +53,9 @@ class AddCustomerViewModelTest {
             val event = awaitItem()
             val event2 = awaitItem()
 
-            assertTrue(event is Event.ShowToast)
+            assertTrue(event is Event.ShowMessage)
             assertTrue(event2 is Event.CustomerAdded)
-            assertEquals(R.string.add_customer_success,(event as Event.ShowToast).message)
+            assertEquals(R.string.add_customer_success,(event as Event.ShowMessage).message)
         }
     }
 

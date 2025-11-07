@@ -1,13 +1,14 @@
 package com.kirabium.relayance.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.google.android.material.snackbar.Snackbar
 import com.kirabium.relayance.databinding.ActivityAddCustomerBinding
 import com.kirabium.relayance.screen.addScreen.AddUiState
 import com.kirabium.relayance.screen.addScreen.AddViewModel
@@ -61,21 +62,25 @@ class AddCustomerActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.eventsFlow.collect { event ->
                     when (event) {
-                        is Event.ShowToast -> {
-                            Toast.makeText(
-                                this@AddCustomerActivity,
-                                event.message,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-
+                        is Event.ShowMessage -> showSnackbar(event.message)
                         is Event.CustomerAdded -> {
+                            val intent = Intent()
+                            intent.putExtra("ADD_RESULT", "success")
+                            setResult(RESULT_OK, intent)
                             finish()
                         }
+                        else -> Unit
                     }
                 }
             }
         }
+    }
+
+    private fun showSnackbar(messageRes: Int) {
+        Snackbar.make(binding.root,
+            getString(messageRes),
+            Snackbar.LENGTH_SHORT)
+            .show()
     }
 
     private fun setupSave() {

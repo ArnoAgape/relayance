@@ -42,14 +42,14 @@ class DetailViewModel @Inject constructor(
                     _uiState.update {
                         DetailUiState.Error.Generic(e.message ?: "Something went wrong")
                     }
-                    _events.trySend(Event.ShowToast(R.string.error_generic))
+                    _events.trySend(Event.ShowMessage(R.string.error_generic))
                 }
                 .collect { customer ->
                     Log.d("DetailViewModel", ">>> Received customer=$customer for id=$customerId")
                     val newState = if (customer != null) {
                         DetailUiState.Success(customer)
                     } else {
-                        _events.trySend(Event.ShowToast(R.string.error_no_account_customer))
+                        _events.trySend(Event.ShowMessage(R.string.error_no_account_customer))
                         DetailUiState.Error.Empty("Impossible to find the customer")
                     }
                     _uiState.update { newState }

@@ -1,7 +1,6 @@
 package com.kirabium.relayance.screen.detailScreen
 
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,11 +21,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -55,15 +57,18 @@ fun DetailScreen(
 
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
         Log.d("DetailScreen", ">>> Current state: $uiState")
         viewModel.eventsFlow.collect { event ->
             when (event) {
-                is Event.ShowToast ->
-                    Toast.makeText(
-                        context, event.message, Toast.LENGTH_SHORT
-                    ).show()
+                is Event.ShowMessage -> {
+                    snackbarHostState.showSnackbar(
+                        message = context.getString(event.message),
+                        duration = SnackbarDuration.Short
+                    )
+                }
 
                 else -> Unit
             }
