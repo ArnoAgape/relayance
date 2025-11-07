@@ -53,9 +53,9 @@ class AddCustomerViewModelTest {
             val event = awaitItem()
             val event2 = awaitItem()
 
-            assertTrue(event is Event.ShowMessage)
+            assertTrue(event is Event.ShowSuccessMessage)
             assertTrue(event2 is Event.CustomerAdded)
-            assertEquals(R.string.add_customer_success,(event as Event.ShowMessage).message)
+            assertEquals(R.string.add_customer_success,(event as Event.ShowSuccessMessage).message)
         }
     }
 
