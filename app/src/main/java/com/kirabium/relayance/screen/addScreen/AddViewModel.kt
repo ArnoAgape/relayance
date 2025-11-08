@@ -42,11 +42,7 @@ class AddViewModel @Inject constructor(
      */
     val customer: StateFlow<Customer> = _customer.asStateFlow()
 
-    var lastToastMessageResId: Int? = null
-        private set
-
-    private fun sendToast(resId: Int) {
-        lastToastMessageResId = resId
+    private fun sendMessage(resId: Int) {
         _events.trySend(Event.ShowMessage(resId))
     }
 
@@ -59,12 +55,12 @@ class AddViewModel @Inject constructor(
 
         when {
             newName.isBlank() -> {
-                sendToast(R.string.error_name)
+                sendMessage(R.string.error_name)
                 return
             }
 
             newEmail.isBlank() || !isEmailValid(newEmail) -> {
-                sendToast(R.string.error_email)
+                sendMessage(R.string.error_email)
                 return
             }
         }
@@ -88,17 +84,17 @@ class AddViewModel @Inject constructor(
             when (e) {
                 is IllegalStateException -> {
                     _uiState.value = AddUiState.Error.NoAccount()
-                    sendToast(R.string.error_no_account_customer)
+                    sendMessage(R.string.error_no_account_customer)
                 }
 
                 is IOException -> {
                     _uiState.value = AddUiState.Error.Generic("Network error: ${e.message}")
-                    sendToast(R.string.error_no_network)
+                    sendMessage(R.string.error_no_network)
                 }
 
                 else -> {
                     _uiState.value = AddUiState.Error.Generic("Unexpected error: ${e.message}")
-                    sendToast(R.string.error_generic)
+                    sendMessage(R.string.error_generic)
                 }
             }
         }

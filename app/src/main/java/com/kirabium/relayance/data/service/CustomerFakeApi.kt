@@ -28,4 +28,9 @@ class CustomerFakeApi : CustomerApi {
         customers.map { list ->
             list.find { it.id == customerId }
         }
+
+    fun setFakeCustomers(fakeList: List<Customer>) {
+        customers.value = fakeList.toMutableList()
+    }
+
 }

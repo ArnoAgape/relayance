@@ -5,6 +5,7 @@ import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import io.cucumber.java.en.When
 
+@Suppress("unused")
 class AddCustomerSteps {
 
     private val robot = AddScreenRobot()

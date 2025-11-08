@@ -1,6 +1,5 @@
 package com.kirabium.relayance.screen.detailScreen
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kirabium.relayance.R
@@ -45,7 +44,6 @@ class DetailViewModel @Inject constructor(
                     _events.trySend(Event.ShowMessage(R.string.error_generic))
                 }
                 .collect { customer ->
-                    Log.d("DetailViewModel", ">>> Received customer=$customer for id=$customerId")
                     val newState = if (customer != null) {
                         DetailUiState.Success(customer)
                     } else {

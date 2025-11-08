@@ -4,18 +4,15 @@ import app.cash.turbine.test
 import com.kirabium.relayance.R
 import com.kirabium.relayance.data.repository.DataRepository
 import com.kirabium.relayance.data.service.CustomerFakeApi
-import com.kirabium.relayance.domain.model.Customer
-import com.kirabium.relayance.ui.activity.FakeCustomers.customers
 import com.kirabium.relayance.ui.common.Event
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 
-class AddCustomerViewModelTest {
+class AddViewModelTest {
 
     private lateinit var dataRepo: DataRepository
     private lateinit var viewModel: AddViewModel
