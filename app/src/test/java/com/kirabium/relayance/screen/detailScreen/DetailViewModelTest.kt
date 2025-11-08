@@ -1,6 +1,7 @@
 package com.kirabium.relayance.screen.detailScreen
 
 import app.cash.turbine.test
+import com.kirabium.relayance.MainDispatcherRule
 import com.kirabium.relayance.data.repository.DataRepository
 import com.kirabium.relayance.domain.model.Customer
 import com.kirabium.relayance.ui.activity.FakeCustomers.generateDate
@@ -11,9 +12,13 @@ import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 class DetailViewModelTest {
+
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
 
     private lateinit var dataRepo: DataRepository
     private lateinit var viewModel: DetailViewModel
@@ -40,8 +45,9 @@ class DetailViewModelTest {
 
         // Assert
         viewModel.uiState.test {
-            val successState = awaitItem()
 
+            val successState = awaitItem()
+            println("$successState")
             assertTrue(successState is DetailUiState.Success)
             assertEquals(fakeCustomer, (successState as DetailUiState.Success).customer)
         }
@@ -62,6 +68,7 @@ class DetailViewModelTest {
 
         // Assert
         viewModel.uiState.test {
+
             val error = awaitItem()
             assertTrue(error is DetailUiState.Error.Generic)
         }
