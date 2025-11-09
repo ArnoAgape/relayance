@@ -1,5 +1,6 @@
 import com.android.build.gradle.BaseExtension
 import org.gradle.kotlin.dsl.androidTestImplementation
+import org.gradle.testing.jacoco.tasks.JacocoReport
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -84,6 +85,7 @@ android {
 
 val androidExtension = extensions.getByType<BaseExtension>()
 
+
 val jacocoTestReport by tasks.registering(JacocoReport::class) {
     dependsOn("testDebugUnitTest", "createDebugCoverageReport")
     group = "Reporting"
@@ -109,7 +111,7 @@ dependencies {
     // Cucumber
     testImplementation(libs.cucumber.java)
     testImplementation(libs.cucumber.junit)
-    androidTestImplementation (libs.cucumber.android)
+    androidTestImplementation(libs.cucumber.android)
 
     //DI
     implementation(libs.hilt)
@@ -145,14 +147,14 @@ dependencies {
 
     testImplementation(libs.mockk)
     testImplementation(libs.turbine)
-    testImplementation (libs.kotlinx.coroutines.test)
+    testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
-    androidTestImplementation (libs.androidx.espresso.intents)
+    androidTestImplementation(libs.androidx.espresso.intents)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
