@@ -5,6 +5,7 @@ import com.kirabium.relayance.R
 import com.kirabium.relayance.data.repository.DataRepository
 import com.kirabium.relayance.domain.model.Customer
 import com.kirabium.relayance.ui.common.Event
+import com.kirabium.relayance.ui.utils.AndroidEmailValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddViewModel @Inject constructor(
-    private val dataRepository: DataRepository
+    private val dataRepository: DataRepository,
+    private val emailValidator: AndroidEmailValidator
 ) :
     ViewModel() {
 
@@ -59,7 +61,7 @@ class AddViewModel @Inject constructor(
                 return
             }
 
-            newEmail.isBlank() || !isEmailValid(newEmail) -> {
+            newEmail.isBlank() || !emailValidator.validate(newEmail) -> {
                 sendMessage(R.string.error_email)
                 return
             }
@@ -98,10 +100,5 @@ class AddViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    private fun isEmailValid(email: String): Boolean {
-        val emailRegex = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")
-        return emailRegex.matches(email)
     }
 }

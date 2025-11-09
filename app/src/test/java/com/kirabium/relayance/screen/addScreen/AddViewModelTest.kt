@@ -1,31 +1,42 @@
 package com.kirabium.relayance.screen.addScreen
 
 import app.cash.turbine.test
+import com.kirabium.relayance.MainDispatcherRule
 import com.kirabium.relayance.R
 import com.kirabium.relayance.data.repository.DataRepository
 import com.kirabium.relayance.data.service.CustomerFakeApi
 import com.kirabium.relayance.ui.common.Event
+import com.kirabium.relayance.ui.utils.AndroidEmailValidator
+import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 class AddViewModelTest {
 
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
+
     private lateinit var dataRepo: DataRepository
     private lateinit var viewModel: AddViewModel
+    private lateinit var emailValidator: AndroidEmailValidator
 
     @Before
     fun setup() {
+        emailValidator = mockk()
         dataRepo = mockk()
-        viewModel = AddViewModel(dataRepo)
+        viewModel = AddViewModel(dataRepo, emailValidator)
     }
 
     @Test
     fun isEmailValid() = runTest {
         // When
+        every { emailValidator.validate(any()) } returns false
+
         viewModel.addCustomer("Alice David", "invalid_email")
 
         // Then
@@ -41,7 +52,9 @@ class AddViewModelTest {
 
         val fakeApi = CustomerFakeApi()
         val repository = DataRepository(fakeApi)
-        val viewModel = AddViewModel(repository)
+
+        every { emailValidator.validate(any()) } returns true
+        val viewModel = AddViewModel(repository, emailValidator)
 
         // When
         viewModel.addCustomer("Alice David", "alice@mail.com")
@@ -62,7 +75,8 @@ class AddViewModelTest {
         // Given
         val fakeApi = CustomerFakeApi()
         val repository = DataRepository(fakeApi)
-        val viewModel = AddViewModel(repository)
+        every { emailValidator.validate(any()) } returns true
+        val viewModel = AddViewModel(repository, emailValidator)
 
         // When
         viewModel.addCustomer("Alice", "alice@mail.com")
