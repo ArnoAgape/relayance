@@ -23,19 +23,9 @@ class AddScreenRobot {
             .perform(click())
     }
 
-    fun selectNameField() {
-        onView(withId(R.id.nameEditText))
-            .perform(click())
-    }
-
     fun enterName(name: String) {
         onView(withId(R.id.nameEditText))
             .perform(typeText(name), closeSoftKeyboard())
-    }
-
-    fun selectEmailField() {
-        onView(withId(R.id.emailEditText))
-            .perform(click())
     }
 
     fun enterEmail(email: String) {

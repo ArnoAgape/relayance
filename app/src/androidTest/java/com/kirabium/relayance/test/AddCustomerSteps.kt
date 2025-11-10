@@ -20,19 +20,9 @@ class AddCustomerSteps {
         robot.tapAddButton()
     }
 
-    @And("I click the customer's name field")
-    fun iClickName() {
-        robot.selectNameField()
-    }
-
     @And("I enter the customer's name {string}")
     fun iEnterNonEmptyName(name: String) {
         robot.enterName(name)
-    }
-
-    @And("I click the customer's email field")
-    fun iClickEmail() {
-        robot.selectEmailField()
     }
 
     @And("I enter the customer's email {string}")
