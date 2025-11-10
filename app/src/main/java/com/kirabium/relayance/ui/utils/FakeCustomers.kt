@@ -1,4 +1,4 @@
-package com.kirabium.relayance.ui.activity
+package com.kirabium.relayance.ui.utils
 
 import com.kirabium.relayance.domain.model.Customer
 import java.util.Calendar

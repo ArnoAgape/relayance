@@ -12,7 +12,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
 import com.kirabium.relayance.R
 import com.kirabium.relayance.domain.model.Customer
-import com.kirabium.relayance.ui.activity.FakeCustomers.generateDate
+import com.kirabium.relayance.ui.utils.FakeCustomers.generateDate
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule

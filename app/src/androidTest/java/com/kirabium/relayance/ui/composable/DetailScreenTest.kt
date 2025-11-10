@@ -12,7 +12,7 @@ import com.kirabium.relayance.R
 import com.kirabium.relayance.extension.DateExt.Companion.toHumanDate
 import com.kirabium.relayance.domain.model.Customer
 import com.kirabium.relayance.screen.detailScreen.DetailContent
-import com.kirabium.relayance.ui.activity.FakeCustomers.generateDate
+import com.kirabium.relayance.ui.utils.FakeCustomers.generateDate
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith

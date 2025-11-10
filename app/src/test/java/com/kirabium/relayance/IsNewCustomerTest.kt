@@ -1,7 +1,7 @@
 package com.kirabium.relayance
 
 import com.kirabium.relayance.domain.model.Customer
-import com.kirabium.relayance.ui.activity.FakeCustomers.generateDate
+import com.kirabium.relayance.ui.utils.FakeCustomers.generateDate
 import org.junit.Test
 import org.junit.Assert.*
 import java.util.Calendar

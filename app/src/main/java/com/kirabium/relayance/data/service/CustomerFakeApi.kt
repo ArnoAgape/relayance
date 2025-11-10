@@ -1,7 +1,7 @@
 package com.kirabium.relayance.data.service
 
 import com.kirabium.relayance.domain.model.Customer
-import com.kirabium.relayance.ui.activity.FakeCustomers.generateDate
+import com.kirabium.relayance.ui.utils.FakeCustomers.generateDate
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map

@@ -6,7 +6,7 @@ import com.kirabium.relayance.data.repository.DataRepository
 import com.kirabium.relayance.data.service.CustomerApi
 import com.kirabium.relayance.data.service.CustomerFakeApi
 import com.kirabium.relayance.domain.model.Customer
-import com.kirabium.relayance.ui.activity.FakeCustomers.generateDate
+import com.kirabium.relayance.ui.utils.FakeCustomers.generateDate
 import io.mockk.every
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals

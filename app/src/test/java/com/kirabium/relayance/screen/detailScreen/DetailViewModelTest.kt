@@ -4,7 +4,7 @@ import app.cash.turbine.test
 import com.kirabium.relayance.MainDispatcherRule
 import com.kirabium.relayance.data.repository.DataRepository
 import com.kirabium.relayance.domain.model.Customer
-import com.kirabium.relayance.ui.activity.FakeCustomers.generateDate
+import com.kirabium.relayance.ui.utils.FakeCustomers.generateDate
 import io.mockk.coEvery
 import io.mockk.mockk
 import junit.framework.TestCase.assertEquals

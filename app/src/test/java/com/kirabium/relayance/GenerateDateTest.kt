@@ -1,7 +1,7 @@
 package com.kirabium.relayance
 
 import com.kirabium.relayance.extension.DateExt.Companion.toHumanDate
-import com.kirabium.relayance.ui.activity.FakeCustomers.generateDate
+import com.kirabium.relayance.ui.utils.FakeCustomers.generateDate
 import junit.framework.TestCase.assertEquals
 import org.junit.After
 import org.junit.Before
